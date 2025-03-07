@@ -1,142 +1,16 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Recipe, RecipeIngredient
 
 def recipe_list(request):
-    ctx ={
-    "recipes": [
-        {
-            "name": "Recipe 1",
-            "ingredients": [
-                {
-                    "name": "tomato",
-                    "quantity": "3pcs"
-                },
-                {
-                    "name": "onion",
-                    "quantity": "1pc"
-                },
-                {
-                    "name": "pork",
-                    "quantity": "1kg"
-                },
-                {
-                    "name": "water",
-                    "quantity": "1L"
-                },
-                {
-                    "name": "sinigang mix",
-                    "quantity": "1 packet"
-                }
-            ],
-            "link": "/recipe/1"
-        },
-        {
-            "name": "Recipe 2",
-            "ingredients": [
-                {
-                    "name": "garlic",
-                    "quantity": "1 head"
-                },
-                {
-                    "name": "onion",
-                    "quantity": "1pc"
-                },
-                {
-                    "name": "vinegar",
-                    "quantity": "1/2cup"
-                },
-                {
-                    "name": "water",
-                    "quanity": "1 cup"
-                },
-                {
-                    "name": "salt",
-                    "quantity": "1 tablespoon"
-                },
-                {
-                    "name": "whole black peppers",
-                    "quantity": "1 tablespoon"
-                },
-                {
-                    "name": "pork",
-                    "quantity": "1 kilo"
-                }
-            ],
-            "link": "/recipe/2"
-        }
-    ]
-}
+    recipes = Recipe.objects.all()
+    return render(request, "recipe_list.html", {"recipes": recipes})
 
-    return render(request, 'recipe_list.html', ctx)
 
-def recipe_detail(request, recipe_id):
-    ctx = [
-        {
-    "name": "Recipe 1",
-    "ingredients": [
-        {
-            "name": "tomato",
-            "quantity": "3pcs"
-        },
-        {
-            "name": "onion",
-            "quantity": "1pc"
-        },
-        {
-            "name": "pork",
-            "quantity": "1kg"
-        },
-        {
-            "name": "water",
-            "quantity": "1L"
-        },
-        {
-            "name": "sinigang mix",
-            "quantity": "1 packet"
-        }
-    ],
-    "link": "/recipe/1"
-},
-       {
-    "name": "Recipe 2",
-    "ingredients": [
-        {
-            "name": "garlic",
-            "quantity": "1 head"
-        },
-        {
-            "name": "onion",
-            "quantity": "1pc"
-        },
-        {
-            "name": "vinegar",
-            "quantity": "1/2cup"
-        },
-        {
-            "name": "water",
-            "quantity": "1 cup"
-        },
-        {
-            "name": "salt",
-            "quantity": "1 tablespoon"
-        },
-        {
-            "name": "whole black peppers",
-            "quantity": "1 tablespoon"
-        },
-        {
-            "name": "pork",
-            "quantity": "1 kilo"
-        }
-    ],
-    "link": "/recipe/2"
-    }
 
-    ]
+
     
-    # Check if recipe_id is valid
-    if 1 <= recipe_id <= len(ctx):
-        recipe = ctx[recipe_id - 1]
-        return render(request, 'recipe_detail.html', recipe)
-    else:
-        return HttpResponse("Recipe not found", status=404)
+def recipe_detail_database(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    ingredients = RecipeIngredient.objects.filter(recipe=recipe)
+    return render(request, 'recipe_detail.html',{'name': recipe.name, "ingredients":ingredients})
