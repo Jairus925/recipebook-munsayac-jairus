@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	<title>Recipe Book</title>
 </head>
 
@@ -9,7 +8,7 @@
 	<header>
 		<nav>
 			<a href="/recipes/list">
-				<h1>Recipe Book</h1>
+				<h1>Recipe Book
 			</a>
 			{% if request.user.is_authenticated %}
 				<form action="{% url 'logout' %}" method="POST">
@@ -21,6 +20,7 @@
 				<a href="{% url 'login' %}">Login</a>
 			{% endif %}
 		</nav>
+				</h1>
 	</header>
 	<main>
 		{% block content %}
