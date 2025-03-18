@@ -17,7 +17,7 @@ class Ingredient(models.Model):
     
 class Recipe(models.Model):
     name = models.CharField(max_length=200)
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
