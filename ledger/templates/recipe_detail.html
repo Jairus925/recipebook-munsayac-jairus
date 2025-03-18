@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}{{ name }}{% endblock %}
 {% block content %}
-<p><strong>Author:</strong> {{ recipe.author.name }}</p>
 <h2>{{ name }}</h2>
+<p><strong>Author:</strong> {{ recipe.author.user }}</p>
     <h3>Ingredients</h3>
 	<ul>
 		{% for ingredient in ingredients %}
