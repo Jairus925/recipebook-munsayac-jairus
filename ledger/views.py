@@ -12,4 +12,4 @@ def recipe_list(request):
 def recipe_detail_database(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
     ingredients = RecipeIngredient.objects.filter(recipe=recipe)
-    return render(request, 'recipe_detail.html',{'name': recipe.name, "ingredients":ingredients})
+    return render(request, 'recipe_detail.html',{'name': recipe.name, "ingredients":ingredients, "author": recipe.author})
