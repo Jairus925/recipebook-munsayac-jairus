@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	<title>Recipe Book</title>
 </head>
 
 <body>
-	<a href="/recipes/list">
-		<h1>Recipe Book</h1>
-	</a>
+	<header>
+		<nav>
+			<a href="/recipes/list">
+				<h1>Recipe Book
+			</a>
+			{% if request.user.is_authenticated %}
+				<form action="{% url 'logout' %}" method="POST">
+					{% csrf_token %}
+					{{ form.as_p }}
+					<button type="submit">Logout</button>
+				</form>
+			{% else %}
+				<a href="{% url 'login' %}">Login</a>
+			{% endif %}
+		</nav>
+				</h1>
+	</header>
 	<main>
 		{% block content %}
 		{% endblock %}
