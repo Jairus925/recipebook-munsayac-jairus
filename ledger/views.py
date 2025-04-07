@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from .models import Recipe, RecipeIngredient
+from .models import Recipe, RecipeIngredient, RecipeImage
 from .forms import RecipeForm, RecipeIngredientForm, IngredientForm, RecipeImageForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
@@ -15,7 +15,7 @@ def recipe_list(request):
 def recipe_detail_database(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
     ingredients = RecipeIngredient.objects.filter(recipe=recipe)
-    return render(request, 'recipe_detail.html',{'name': recipe.name, "ingredients":ingredients, "author": recipe.author})
+    return render(request, 'recipe_detail.html',{'name': recipe.name, "ingredients":ingredients, "author": recipe.author, 'recipe': recipe})
 
 @login_required
 def recipeingredient_add(request, recipe_id):
@@ -26,7 +26,7 @@ def recipeingredient_add(request, recipe_id):
             recipeingredient = recipeingredient_form.save(commit=False)
             recipeingredient.recipe = recipe
             recipeingredient.save()
-        return HttpResponseRedirect(reverse("recipe_detail", args=[recipe_id]))
+        return HttpResponseRedirect(reverse("detail", args=[recipe_id]))
 
     return render(
         request,
@@ -46,7 +46,7 @@ def recipeimage_add(request, recipe_id):
         if recipeimage_form.is_valid():
             recipeimage_form.save()
 
-        return HttpResponseRedirect(reverse("recipe_detail", args=[recipe_id]))
+        return HttpResponseRedirect(reverse("detail", args=[recipe_id]))
     return render(
         request,
         "recipeimage_add.html",

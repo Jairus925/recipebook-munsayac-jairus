@@ -3,6 +3,9 @@
 {% block title %}{{ name }}{% endblock %}
 {% block content %}
 <h2>{{ name }}</h2>
+{% for image in recipe.recipeimage_set.all %}
+  <img src="{{ image.image.url }}" alt="{{ image.description }}">
+{% endfor %}
 <p><strong>Author:</strong> {{ author }}</p>
     <h3>Ingredients</h3>
 	<ul>
@@ -10,4 +13,7 @@
 		<li>{{ ingredient.ingredient }}: {{ ingredient.quantity }}</li>
 		{% endfor %}
 	</ul>
-{% endblock %}
+	<a href="{% url 'recipeingredient_add' recipe.id %}">Add Ingredient to Recipe</a>
+	<a href="{% url 'recipeimage_add' recipe.id %}">Add Image to Recipe</a>
+
+	{% endblock %}
