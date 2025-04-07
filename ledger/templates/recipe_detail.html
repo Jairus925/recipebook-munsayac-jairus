@@ -3,8 +3,8 @@
 {% block title %}{{ name }}{% endblock %}
 {% block content %}
 <h2>{{ name }}</h2>
-{% for image in recipe.recipeimage_set.all %}
-  <img src="{{ image.image.url }}" alt="{{ image.description }}">
+{% for image in recipe.images.all %}
+		<img src="{{ image.image.url }}" alt="{{ image.description }}" />
 {% endfor %}
 <p><strong>Author:</strong> {{ author }}</p>
     <h3>Ingredients</h3>

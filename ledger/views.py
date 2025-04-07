@@ -75,9 +75,9 @@ def recipe_add(request):
         recipe_form = RecipeForm(request.POST)
         if recipe_form.is_valid():
             recipe = recipe_form.save()
-            if request.POST.get("add_ingredient"):
-                return reverse(recipeingredient_add, recipe.id)
-            return reverse(index)
+            if "add_ingredient" in request.POST:
+                return redirect(reverse("ingredient_add"))
+            return HttpResponseRedirect(reverse("recipe_list"))
 
     return render(request, "recipe_add.html", {"recipe_form": RecipeForm()})
 
